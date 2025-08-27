@@ -14,10 +14,7 @@ export class RegisterUseCase {
 
     async execute(email: string): Promise<IRegisterResponseDTO> {
         const user = await this.userRepository.findByEmail(email);
-
-        if (user) {
-            throw new AppError("El usuario ya existe", 400);
-        }
+        if (user) throw new AppError("El usuario ya existe", 404);
 
         const newUser = await this.userRepository.create(email);
         const token = this.authService.sign(newUser);

@@ -14,4 +14,19 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{ts,js}", "!src/**/*.d.ts"],
   coverageDirectory: "coverage",
+  setupFiles: ["<rootDir>/tests/setup.ts"],
+  roots: ["<rootDir>/tests"],
+  testMatch: [
+    "**/integration/**/*.spec.ts",
+    "**/unit/**/*.spec.ts"
+  ],
+  coveragePathIgnorePatterns: [
+    "node_modules",
+    "dist",
+    "src/container",
+    "src/interfaces/app.ts",
+    "src/infrastructure/database/",
+    ".*\\.router\\.ts",
+    ".*\\.controller\\.ts",
+  ]
 };

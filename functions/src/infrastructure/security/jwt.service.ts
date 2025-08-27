@@ -7,8 +7,8 @@ const { JWT_SECRET } = loadCredentials();
 
 @injectable()
 export class JwtService implements IAuthService {
-    sign(payload: object, expiresIn: string | number = "12h"): string {
-        const options: SignOptions = { expiresIn: expiresIn as number };
+    sign(payload: object, expiresIn: SignOptions["expiresIn"] = "12h"): string {
+        const options: SignOptions = { expiresIn };
         return jwt.sign(payload, JWT_SECRET, options);
     }
 

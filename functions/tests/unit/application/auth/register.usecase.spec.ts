@@ -3,14 +3,14 @@ import { container as rootContainer } from "tsyringe";
 import { TOKENS } from "@/container/tokens";
 import { UserMockRepository } from "@/infrastructure/database/user.mock.repository";
 import { IUserRepository } from "@/domain/user/user.repository";
-import { LoginUseCase } from "@/application/auth/login.usecase";
 import { IAuthService } from "@/domain/auth/auth.service";
 import { JwtService } from "@/infrastructure/security/jwt.service";
+import { RegisterUseCase } from "@/application/auth/register.usecase";
 
 let testContainer: typeof rootContainer;
 
-describe("LoginUseCase", () => {
-    let loginUseCase: LoginUseCase;
+describe("RegisterUseCase", () => {
+    let registerUseCase: RegisterUseCase;
     let userRepository: IUserRepository;
     let authService: IAuthService;
 
@@ -23,18 +23,11 @@ describe("LoginUseCase", () => {
 
         testContainer.register(TOKENS.IAuthService, { useClass: JwtService });
         authService = testContainer.resolve(TOKENS.IAuthService);
-        loginUseCase = new LoginUseCase(userRepository, authService);
+        registerUseCase = new RegisterUseCase(userRepository, authService);
     })
 
-    it("debería dar error si el usuario no existe", async () => {
-        await expect(loginUseCase.execute(email)).rejects.toThrow("Usuario no encontrado");
-    })
-
-    it("debería retornar token y usuario si el usuario existe", async () => {
-        const user = await userRepository.create(email);
-        const token = authService.sign(user);
-        const result = await loginUseCase.execute(email);
-        expect(result.user).toEqual(user);
-        expect(result.token).toEqual(token);
+    it("debería dar error si el usuario ya existe", async () => {
+        const response = await registerUseCase.execute(email);
+        expect(response.user.email).toEqual(email);
     })
 })

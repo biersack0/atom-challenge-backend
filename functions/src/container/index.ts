@@ -7,12 +7,14 @@ import { UserFirebaseRepository } from "@/infrastructure/database/user.firebase.
 import { JwtService } from "@/infrastructure/security/jwt.service";
 import { LoginUseCase } from "@/application/auth/login.usecase";
 import { RegisterUseCase } from "@/application/auth/register.usecase";
-import { FirestoreTaskRepository } from "@/infrastructure/database/task.firebase.repository";
+import { TaskFirebaseRepository } from "@/infrastructure/database/task.firebase.repository";
 import { CreateTaskUseCase } from "@/application/task/createTask.usecase";
 import { ITaskRepository } from "@/domain/task/task.repository";
 import { UpdateTaskUseCase } from "@/application/task/updateTask.usecase";
 import { DeleteTaskUseCase } from "@/application/task/deleteTask.usecase";
 import { GetTasksByUserIdUseCase } from "@/application/task/getTasksByUserId.usecase";
+import { CreateUserUseCase } from "@/application/user/createUser.usecase";
+import { ValidateUserUseCase } from "@/application/user/validateUser.usecase";
 
 // Auth
 container.register<IAuthService>(TOKENS.IAuthService, { useClass: JwtService });
@@ -21,9 +23,11 @@ container.register(TOKENS.IRegisterUseCase, { useClass: RegisterUseCase });
 
 // User
 container.register<IUserRepository>(TOKENS.IUserRepository, { useClass: UserFirebaseRepository });
+container.register(TOKENS.IFindByEmailUseCase, { useClass: ValidateUserUseCase });
+container.register(TOKENS.ICreateUserUseCase, { useClass: CreateUserUseCase });
 
 // Task
-container.register<ITaskRepository>(TOKENS.ITaskRepository, { useClass: FirestoreTaskRepository });
+container.register<ITaskRepository>(TOKENS.ITaskRepository, { useClass: TaskFirebaseRepository });
 container.register(TOKENS.IGetTasksByUserUseCase, { useClass: GetTasksByUserIdUseCase });
 container.register(TOKENS.ICreateTaskUseCase, { useClass: CreateTaskUseCase });
 container.register(TOKENS.IUpdateTaskUseCase, { useClass: UpdateTaskUseCase });

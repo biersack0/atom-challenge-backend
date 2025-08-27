@@ -6,6 +6,8 @@ export const TOKENS = {
 
     // User
     IUserRepository: Symbol.for("IUserRepository"),
+    IFindByEmailUseCase: Symbol.for("IFindByEmailUseCase"),
+    ICreateUserUseCase: Symbol.for("ICreateUserUseCase"),
 
     // Task
     ITaskRepository: Symbol.for("ITaskRepository"),

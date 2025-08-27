@@ -7,7 +7,7 @@ import { AppError } from "@/shared/app-error";
 const COLLECTION = "tasks";
 
 @injectable()
-export class FirestoreTaskRepository implements ITaskRepository {
+export class TaskFirebaseRepository implements ITaskRepository {
     private db = admin.firestore();
     async findById(id: string): Promise<ITask | null> {
         const task = await this.db.collection(COLLECTION).doc(id).get();

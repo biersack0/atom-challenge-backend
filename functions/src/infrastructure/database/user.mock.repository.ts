@@ -4,13 +4,14 @@ import { IUserRepository } from "@/domain/user/user.repository";
 
 @injectable()
 export class UserMockRepository implements IUserRepository {
-    private users: Record<string, IUser> = {};
+    private users: IUser[] = [];
 
-    findById(id: string): Promise<IUser | null> {
-        throw new Error("Method not implemented.");
+    async findById(id: string): Promise<IUser | null> {
+        return this.users.find(user => user.id === id) || null;
     }
-    findByEmail(email: string): Promise<IUser | null> {
-        throw new Error("Method not implemented.");
+
+    async findByEmail(email: string): Promise<IUser | null> {
+        return this.users.find(u => u.email === email) || null;
     }
 
     async create(email: string): Promise<IUser> {
@@ -22,7 +23,7 @@ export class UserMockRepository implements IUserRepository {
             createdAt: now,
             updatedAt: now
         };
-        this.users[id] = user;
+        this.users.push(user);
         return user;
     }
 
