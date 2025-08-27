@@ -9,6 +9,10 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
+    "types": [
+      "node",
+      "jest"
+    ],
     "baseUrl": "./src",
     "paths": {
       "@/*": [
@@ -18,6 +22,7 @@
   },
   "compileOnSave": true,
   "include": [
-    "src"
+    "src",
+    "tests"
   ]
 }

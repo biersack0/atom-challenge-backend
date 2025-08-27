@@ -1,6 +1,7 @@
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
+import { IAuthService } from "@/domain/auth/auth.service";
 
-export class JwtService {
+export class JwtService implements IAuthService {
     constructor(private secret: string) { }
     sign(payload: object, expiresIn: string | number = "12h"): string {
         const options: SignOptions = { expiresIn: expiresIn as number };

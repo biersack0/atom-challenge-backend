@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { CreateUserUseCase } from "@/application/user/createUser.usecase";
+import { IUserController } from "./user.controller.interface";
 
-export class UserController {
+export class UserController implements IUserController {
     constructor(private createUserUseCase: CreateUserUseCase) { }
 
-    async createUser(req: Request, res: Response) {
+    async createUser(req: Request, res: Response): Promise<object> {
         try {
             const { email } = req.body;
             const user = await this.createUserUseCase.execute(email);

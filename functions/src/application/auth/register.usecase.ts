@@ -1,0 +1,27 @@
+import { IAuthService } from "@/domain/auth/auth.service";
+import { IUserRepository } from "@/domain/user/user.repository";
+import { AuthResponseDTO } from "./login-response.dto";
+
+export class RegisterUseCase {
+    constructor(
+        private userRepository: IUserRepository,
+        private authService: IAuthService
+    ) { }
+
+    async execute(email: string): Promise<AuthResponseDTO> {
+        const user = await this.userRepository.findByEmail(email);
+
+        if (user) {
+            throw new Error("El usuario ya existe");
+        }
+
+        const newUser = await this.userRepository.create(email);
+        const token = this.authService.sign(newUser);
+
+        const response: AuthResponseDTO = {
+            token,
+            user: newUser
+        }
+        return response;
+    }
+}
