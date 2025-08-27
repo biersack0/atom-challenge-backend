@@ -1,4 +1,5 @@
 interface ICredentials {
+    NODE_PORT: string;
     JWT_SECRET: string;
     FIREBASE_PROJECT_ID: string;
     FIREBASE_CLIENT_EMAIL: string;
@@ -7,6 +8,7 @@ interface ICredentials {
 
 export const loadCredentials = (): ICredentials => {
     return {
+        NODE_PORT: process.env.NODE_PORT!,
         JWT_SECRET: process.env.JWT_SECRET!,
         FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID!,
         FIREBASE_CLIENT_EMAIL: process.env.FIREBASE_CLIENT_EMAIL!,

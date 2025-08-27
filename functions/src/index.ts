@@ -1,5 +1,3 @@
-import http from "http";
-
 /**
  * Import function triggers from their respective submodules:
  *
@@ -8,9 +6,10 @@ import http from "http";
  *
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
-
+import "reflect-metadata";
 import { setGlobalOptions } from "firebase-functions";
-/* import { onRequest } from "firebase-functions/https";
+import { runServer } from "./interfaces/server";
+/* import {onRequest} from "firebase-functions/https";
 import * as logger from "firebase-functions/logger"; */
 
 // Start writing functions
@@ -28,20 +27,9 @@ import * as logger from "firebase-functions/logger"; */
 // this will be the maximum concurrent request count.
 setGlobalOptions({ maxInstances: 10 });
 
+runServer();
+
 // export const helloWorld = onRequest((request, response) => {
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
-
-
-import * as functions from "firebase-functions";
-import app from "./infrastructure/server";
-
-const server = http.createServer(app);
-
-server.listen(3000, () => {
-    console.log("  WebSocket Server listening on port: " + app.get("port"));
-    console.log("  Press CTRL-C to stop\n");
-});
-
-exports.api = functions.https.onRequest(app);

@@ -1,6 +1,6 @@
 import { IUser } from "@/domain/user/user.entity";
 
-export interface AuthResponseDTO {
+export interface ILoginResponseDTO {
+    user: IUser;
     token: string;
-    user: IUser
 }

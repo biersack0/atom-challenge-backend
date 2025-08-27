@@ -1,24 +1,28 @@
-import { IAuthService } from "@/domain/auth/auth.service";
+import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "@/domain/user/user.repository";
-import { AuthResponseDTO } from "./login-response.dto";
+import { IAuthService } from "@/domain/auth/auth.service";
+import { IRegisterResponseDTO } from "./dtos/register-response.dto";
+import { TOKENS } from "@/container/tokens";
+import { AppError } from "@/shared/app-error";
 
+@injectable()
 export class RegisterUseCase {
     constructor(
-        private userRepository: IUserRepository,
-        private authService: IAuthService
+        @inject(TOKENS.IUserRepository) private userRepository: IUserRepository,
+        @inject(TOKENS.IAuthService) private authService: IAuthService
     ) { }
 
-    async execute(email: string): Promise<AuthResponseDTO> {
+    async execute(email: string): Promise<IRegisterResponseDTO> {
         const user = await this.userRepository.findByEmail(email);
 
         if (user) {
-            throw new Error("El usuario ya existe");
+            throw new AppError("El usuario ya existe", 400);
         }
 
         const newUser = await this.userRepository.create(email);
         const token = this.authService.sign(newUser);
 
-        const response: AuthResponseDTO = {
+        const response: IRegisterResponseDTO = {
             token,
             user: newUser
         }

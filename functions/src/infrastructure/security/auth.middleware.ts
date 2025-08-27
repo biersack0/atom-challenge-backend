@@ -1,12 +1,10 @@
-import { RequestHandler } from "express";
-import { loadCredentials } from "@/config/enviroment";
+import { RequestHandler, Request } from "express";
 import { JwtService } from "./jwt.service";
 
-const { JWT_SECRET } = loadCredentials();
-const jwtService = new JwtService(JWT_SECRET);
+const jwtService = new JwtService();
 
 export const authMiddleware = (): RequestHandler => {
-    return (req, res, next) => {
+    return (req: Request, res, next) => {
         try {
             const token = req.headers.authorization?.split(" ")[1];
             if (!token) {
