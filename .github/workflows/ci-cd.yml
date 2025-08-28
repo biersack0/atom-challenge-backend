@@ -32,6 +32,12 @@ jobs:
         working-directory: ./functions
         run: npm run build
 
+      - name: Debug env
+        run: |
+          echo "Project ID: $APP_FIREBASE_PROJECT_ID"
+          echo "Client Email: $APP_FIREBASE_CLIENT_EMAIL"
+          echo "Private Key length: ${#APP_FIREBASE_PRIVATE_KEY}"
+
       - name: Deploy to Firebase
         if: github.ref == 'refs/heads/main'
         working-directory: ./functions
