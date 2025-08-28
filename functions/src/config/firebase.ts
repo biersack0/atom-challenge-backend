@@ -6,6 +6,12 @@ dotenv.config();
 // const { FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY } = loadCredentials();
 
 if (!admin.apps.length) {
+  console.log({
+    projectId: process.env.APP_FIREBASE_PROJECT_ID,
+    clientEmail: process.env.APP_FIREBASE_CLIENT_EMAIL?.slice(0, 10) + '...',
+    privateKeyStart: process.env.APP_FIREBASE_PRIVATE_KEY?.slice(0, 10) + '...'
+  });
+
   admin.initializeApp({
     credential: admin.credential.cert({
       projectId: process.env.APP_FIREBASE_PROJECT_ID || "",
