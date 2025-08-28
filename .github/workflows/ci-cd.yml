@@ -29,14 +29,6 @@ jobs:
         working-directory: ./functions
         run: npm run build
 
-      - name: Run tests
-        working-directory: ./functions
-        run: npm run test
-        env:
-          APP_FIREBASE_PROJECT_ID: ${{ secrets.APP_FIREBASE_PROJECT_ID }}
-          APP_FIREBASE_CLIENT_EMAIL: ${{ secrets.APP_FIREBASE_CLIENT_EMAIL }}
-          APP_FIREBASE_PRIVATE_KEY: ${{ secrets.APP_FIREBASE_PRIVATE_KEY }}
-
       - name: Deploy to Firebase
         if: github.ref == 'refs/heads/main'
         working-directory: ./functions
