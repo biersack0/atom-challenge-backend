@@ -1,4 +1,4 @@
-import { ITask } from "./task.entity";
+import {ITask} from "./task.entity";
 
 export interface ITaskRepository {
     getTasksByUser(userId: string): Promise<ITask[]>;

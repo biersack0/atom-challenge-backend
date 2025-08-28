@@ -7,11 +7,11 @@ interface ICredentials {
 }
 
 export const loadCredentials = (): ICredentials => {
-    return {
-        NODE_PORT: process.env.NODE_PORT!,
-        JWT_SECRET: process.env.JWT_SECRET! || "test-secret",
-        FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID!,
-        FIREBASE_CLIENT_EMAIL: process.env.FIREBASE_CLIENT_EMAIL!,
-        FIREBASE_PRIVATE_KEY: process.env.FIREBASE_PRIVATE_KEY!,
-    }
-}
+  return {
+    NODE_PORT: process.env.NODE_PORT!,
+    JWT_SECRET: process.env.JWT_SECRET! || "test-secret",
+    FIREBASE_PROJECT_ID: process.env.APP_FIREBASE_PROJECT_ID!,
+    FIREBASE_CLIENT_EMAIL: process.env.APP_FIREBASE_CLIENT_EMAIL!,
+    FIREBASE_PRIVATE_KEY: process.env.APP_FIREBASE_PRIVATE_KEY!,
+  };
+};

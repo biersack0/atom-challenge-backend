@@ -1,6 +1,5 @@
 # Backend API - ATOM Challenge
-
-Este proyecto implementa Clean Architecture para crear una API robusta y mantenible.
+API Rest para la gestión de tareas y autenticación de usuarios, desarrollada con Node.js, TypeScript y Firebase.
 
 ## 🏗️ Estructura de Carpetas
 

@@ -1,40 +1,40 @@
-import "reflect-metadata"
-import { container as rootContainer } from "tsyringe";
-import { TOKENS } from "@/container/tokens";
-import { UserMockRepository } from "@/infrastructure/database/user.mock.repository";
-import { IUserRepository } from "@/domain/user/user.repository";
-import { LoginUseCase } from "@/application/auth/login.usecase";
-import { IAuthService } from "@/domain/auth/auth.service";
-import { JwtService } from "@/infrastructure/security/jwt.service";
+import "reflect-metadata";
+import {container as rootContainer} from "tsyringe";
+import {TOKENS} from "@/container/tokens";
+import {UserMockRepository} from "@/infrastructure/database/user.mock.repository";
+import {IUserRepository} from "@/domain/user/user.repository";
+import {LoginUseCase} from "@/application/auth/login.usecase";
+import {IAuthService} from "@/domain/auth/auth.service";
+import {JwtService} from "@/infrastructure/security/jwt.service";
 
 let testContainer: typeof rootContainer;
 
 describe("LoginUseCase", () => {
-    let loginUseCase: LoginUseCase;
-    let userRepository: IUserRepository;
-    let authService: IAuthService;
+  let loginUseCase: LoginUseCase;
+  let userRepository: IUserRepository;
+  let authService: IAuthService;
 
-    const email = "test@test.com";
+  const email = "test@test.com";
 
-    beforeEach(() => {
-        testContainer = rootContainer.createChildContainer();
-        testContainer.register(TOKENS.IUserRepository, { useClass: UserMockRepository });
-        userRepository = testContainer.resolve(TOKENS.IUserRepository);
+  beforeEach(() => {
+    testContainer = rootContainer.createChildContainer();
+    testContainer.register(TOKENS.IUserRepository, {useClass: UserMockRepository});
+    userRepository = testContainer.resolve(TOKENS.IUserRepository);
 
-        testContainer.register(TOKENS.IAuthService, { useClass: JwtService });
-        authService = testContainer.resolve(TOKENS.IAuthService);
-        loginUseCase = new LoginUseCase(userRepository, authService);
-    })
+    testContainer.register(TOKENS.IAuthService, {useClass: JwtService});
+    authService = testContainer.resolve(TOKENS.IAuthService);
+    loginUseCase = new LoginUseCase(userRepository, authService);
+  });
 
-    it("debería dar error si el usuario no existe", async () => {
-        await expect(loginUseCase.execute(email)).rejects.toThrow("Usuario no encontrado");
-    })
+  it("debería dar error si el usuario no existe", async () => {
+    await expect(loginUseCase.execute(email)).rejects.toThrow("Usuario no encontrado");
+  });
 
-    it("debería retornar token y usuario si el usuario existe", async () => {
-        const user = await userRepository.create(email);
-        const token = authService.sign(user);
-        const result = await loginUseCase.execute(email);
-        expect(result.user).toEqual(user);
-        expect(result.token).toEqual(token);
-    })
-})
+  it("debería retornar token y usuario si el usuario existe", async () => {
+    const user = await userRepository.create(email);
+    const token = authService.sign(user);
+    const result = await loginUseCase.execute(email);
+    expect(result.user).toEqual(user);
+    expect(result.token).toEqual(token);
+  });
+});

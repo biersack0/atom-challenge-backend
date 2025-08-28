@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 
 export interface IUserController {
     validateUser(req: Request, res: Response): Promise<object>;

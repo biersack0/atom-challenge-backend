@@ -15,16 +15,20 @@
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "*"
+        "src/*"
       ]
     }
   },
   "compileOnSave": true,
   "include": [
-    "src",
-    "tests"
+    "src"
+  ],
+  "exclude": [
+    "tests",
+    "node_modules",
+    "lib"
   ]
 }

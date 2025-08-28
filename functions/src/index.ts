@@ -1,14 +1,19 @@
 import "reflect-metadata";
-import { setGlobalOptions } from "firebase-functions";
-import { runServer } from "./interfaces/server";
-/* import {onRequest} from "firebase-functions/https";
-import * as logger from "firebase-functions/logger"; */
+import { setGlobalOptions, https } from "firebase-functions";
+import * as logger from "firebase-functions/logger";
+import app from "./interfaces/app";
 
 setGlobalOptions({ maxInstances: 10 });
 
-runServer();
+// Exportar la función HTTP para Firebase usando la app Express
+export const api = https.onRequest(app);
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+// Función de prueba simple
+export const helloWorld = https.onRequest((request, response) => {
+    logger.info("Hello logs!", { structuredData: true });
+    response.json({
+        success: true,
+        message: "Hello from Firebase Cloud Functions!",
+        timestamp: new Date().toISOString()
+    });
+});

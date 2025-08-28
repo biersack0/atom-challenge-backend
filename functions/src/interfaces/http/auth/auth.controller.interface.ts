@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 
 export interface IAuthController {
     login(req: Request, res: Response): Promise<object>;

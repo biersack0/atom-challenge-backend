@@ -1,4 +1,4 @@
-import { IUser } from "@/domain/user/user.entity";
+import {IUser} from "@/domain/user/user.entity";
 
 export interface ILoginResponseDTO {
     user: IUser;
