@@ -15,6 +15,7 @@ module.exports = {
   collectCoverageFrom: ["src/**/*.{ts,js}", "!src/**/*.d.ts"],
   coverageDirectory: "coverage",
   roots: ["<rootDir>/tests"],
+  setupFiles: ["<rootDir>/tests/setupTests.ts"],
   testMatch: [
     "**/integration/**/*.spec.ts",
     "**/unit/**/*.spec.ts"
