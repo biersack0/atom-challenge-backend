@@ -1,11 +1,12 @@
 import "reflect-metadata";
-import {container as rootContainer} from "tsyringe";
-import {TOKENS} from "@/container/tokens";
-import {UserMockRepository} from "@/infrastructure/database/user.mock.repository";
-import {IUserRepository} from "@/domain/user/user.repository";
-import {LoginUseCase} from "@/application/auth/login.usecase";
-import {IAuthService} from "@/domain/auth/auth.service";
-import {JwtService} from "@/infrastructure/security/jwt.service";
+import { container as rootContainer } from "tsyringe";
+import { UserMockRepository } from './../../../../src/infrastructure/database/user.mock.repository';
+import { IAuthService } from './../../../../src/domain/auth/auth.service';
+import { IUserRepository } from './../../../../src/domain/user/user.repository';
+import { LoginUseCase } from './../../../../src/application/auth/login.usecase';
+import { TOKENS } from './../../../../src/container/tokens';
+import { JwtService } from '../../../../src/infrastructure/security/jwt.service';
+
 
 let testContainer: typeof rootContainer;
 
@@ -18,10 +19,10 @@ describe("LoginUseCase", () => {
 
   beforeEach(() => {
     testContainer = rootContainer.createChildContainer();
-    testContainer.register(TOKENS.IUserRepository, {useClass: UserMockRepository});
+    testContainer.register(TOKENS.IUserRepository, { useClass: UserMockRepository });
     userRepository = testContainer.resolve(TOKENS.IUserRepository);
 
-    testContainer.register(TOKENS.IAuthService, {useClass: JwtService});
+    testContainer.register(TOKENS.IAuthService, { useClass: JwtService });
     authService = testContainer.resolve(TOKENS.IAuthService);
     loginUseCase = new LoginUseCase(userRepository, authService);
   });

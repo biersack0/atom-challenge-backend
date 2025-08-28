@@ -16,6 +16,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
+    "rootDir": "src",
     "paths": {
       "@/*": [
         "src/*"
@@ -24,10 +25,10 @@
   },
   "compileOnSave": true,
   "include": [
-    "src",
-    "tests"
+    "src/**/*.ts",
   ],
   "exclude": [
+    "tests",
     "node_modules",
     "lib"
   ]

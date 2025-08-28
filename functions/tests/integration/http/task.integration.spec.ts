@@ -1,12 +1,12 @@
 import request from "supertest";
 import app from "../../../src/interfaces/app";
-import {JwtService} from "@/infrastructure/security/jwt.service";
+import { JwtService } from '../../../src/infrastructure/security/jwt.service';
 
 let token: string;
 
 beforeAll(async () => {
   const jwtService = new JwtService();
-  token = jwtService.sign({userId: "1"});
+  token = jwtService.sign({ userId: "1" });
 });
 
 describe("Task API - Integration", () => {

@@ -1,12 +1,12 @@
 import "reflect-metadata";
-import {container as rootContainer} from "tsyringe";
-import {TOKENS} from "@/container/tokens";
-import {ITaskRepository} from "@/domain/task/task.repository";
-import {TaskMockRepository} from "@/infrastructure/database/task.mock.repository";
-import {UserMockRepository} from "@/infrastructure/database/user.mock.repository";
-import {IUserRepository} from "@/domain/user/user.repository";
-import {Task} from "@/domain/task/task.value";
-import {UpdateTaskUseCase} from "@/application/task/updateTask.usecase";
+import { container as rootContainer } from "tsyringe";
+import { UpdateTaskUseCase } from './../../../../src/application/task/updateTask.usecase';
+import { TOKENS } from './../../../../src/container/tokens';
+import { ITaskRepository } from './../../../../src/domain/task/task.repository';
+import { TaskMockRepository } from './../../../../src/infrastructure/database/task.mock.repository';
+import { IUserRepository } from './../../../../src/domain/user/user.repository';
+import { Task } from './../../../../src/domain/task/task.value';
+import { UserMockRepository } from './../../../../src/infrastructure/database/user.mock.repository';
 
 let testContainer: typeof rootContainer;
 
@@ -23,10 +23,10 @@ describe("UpdateTaskUseCase", () => {
 
   beforeEach(() => {
     testContainer = rootContainer.createChildContainer();
-    testContainer.register(TOKENS.ITaskRepository, {useClass: TaskMockRepository});
+    testContainer.register(TOKENS.ITaskRepository, { useClass: TaskMockRepository });
     taskRepository = testContainer.resolve(TOKENS.ITaskRepository);
 
-    testContainer.register(TOKENS.IUserRepository, {useClass: UserMockRepository});
+    testContainer.register(TOKENS.IUserRepository, { useClass: UserMockRepository });
     userRepository = testContainer.resolve(TOKENS.IUserRepository);
 
     updateTaskUseCase = new UpdateTaskUseCase(taskRepository, userRepository);

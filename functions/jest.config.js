@@ -4,6 +4,7 @@ const tsJestTransformCfg = createDefaultPreset().transform;
 
 /** @type {import("jest").Config} **/
 module.exports = {
+  preset: "ts-jest",
   testEnvironment: "node",
   transform: {
     ...tsJestTransformCfg,
@@ -14,11 +15,8 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{ts,js}", "!src/**/*.d.ts"],
   coverageDirectory: "coverage",
-  roots: ["<rootDir>/tests"],
-  testMatch: [
-    "**/integration/**/*.spec.ts",
-    "**/unit/**/*.spec.ts"
-  ],
+  roots: ["<rootDir>/src", "<rootDir>/tests"],
+  testMatch: ["**/integration/**/*.spec.ts", "**/unit/**/*.spec.ts"],
   coveragePathIgnorePatterns: [
     "node_modules",
     "dist",

@@ -1,9 +1,9 @@
 import "reflect-metadata";
-import {container as rootContainer} from "tsyringe";
-import {TOKENS} from "@/container/tokens";
-import {ValidateUserUseCase} from "@/application/user/validateUser.usecase";
-import {IUserRepository} from "@/domain/user/user.repository";
-import {UserMockRepository} from "@/infrastructure/database/user.mock.repository";
+import { container as rootContainer } from "tsyringe";
+import { ValidateUserUseCase } from './../../../../src/application/user/validateUser.usecase';
+import { TOKENS } from './../../../../src/container/tokens';
+import { IUserRepository } from './../../../../src/domain/user/user.repository';
+import { UserMockRepository } from './../../../../src/infrastructure/database/user.mock.repository';
 
 let testContainer: typeof rootContainer;
 
@@ -13,7 +13,7 @@ describe("ValidateUserUseCase", () => {
 
   beforeEach(() => {
     testContainer = rootContainer.createChildContainer();
-    testContainer.register(TOKENS.IUserRepository, {useClass: UserMockRepository});
+    testContainer.register(TOKENS.IUserRepository, { useClass: UserMockRepository });
     userRepository = testContainer.resolve(TOKENS.IUserRepository);
     validateUserUseCase = new ValidateUserUseCase(userRepository);
   });
@@ -30,6 +30,6 @@ describe("ValidateUserUseCase", () => {
     const userFound = await validateUserUseCase.execute(email);
 
     expect(userFound).not.toBeNull();
-    expect(userFound).toMatchObject({email});
+    expect(userFound).toMatchObject({ email });
   });
 });

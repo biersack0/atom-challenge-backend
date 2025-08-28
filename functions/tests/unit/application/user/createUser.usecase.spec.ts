@@ -1,9 +1,9 @@
 import "reflect-metadata";
-import {container as rootContainer} from "tsyringe";
-import {CreateUserUseCase} from "@/application/user/createUser.usecase";
-import {TOKENS} from "@/container/tokens";
-import {IUserRepository} from "@/domain/user/user.repository";
-import {UserMockRepository} from "@/infrastructure/database/user.mock.repository";
+import { container as rootContainer } from "tsyringe";
+import { CreateUserUseCase } from './../../../../src/application/user/createUser.usecase';
+import { TOKENS } from './../../../../src/container/tokens';
+import { IUserRepository } from './../../../../src/domain/user/user.repository';
+import { UserMockRepository } from './../../../../src/infrastructure/database/user.mock.repository';
 
 let testContainer: typeof rootContainer;
 
@@ -13,7 +13,7 @@ describe("CreateUserUseCase", () => {
 
   beforeEach(() => {
     testContainer = rootContainer.createChildContainer();
-    testContainer.register(TOKENS.IUserRepository, {useClass: UserMockRepository});
+    testContainer.register(TOKENS.IUserRepository, { useClass: UserMockRepository });
     userRepository = testContainer.resolve(TOKENS.IUserRepository);
     createUserUseCase = new CreateUserUseCase(userRepository);
   });
