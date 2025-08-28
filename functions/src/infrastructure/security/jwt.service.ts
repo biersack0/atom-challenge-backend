@@ -1,14 +1,14 @@
-import jwt, {JwtPayload, SignOptions} from "jsonwebtoken";
-import {injectable} from "tsyringe";
-import {IAuthService} from "@/domain/auth/auth.service";
-import {loadCredentials} from "@/config/enviroment";
+import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
+import { injectable } from "tsyringe";
+import { IAuthService } from "@/domain/auth/auth.service";
+import { loadCredentials } from "@/config/enviroment";
 
-const {JWT_SECRET} = loadCredentials();
+const { JWT_SECRET } = loadCredentials();
 
 @injectable()
 export class JwtService implements IAuthService {
-  sign(payload: object, expiresIn: SignOptions["expiresIn"] = "12h"): string {
-    const options: SignOptions = {expiresIn};
+  sign(payload: object, expiresIn: SignOptions["expiresIn"] = "48h"): string {
+    const options: SignOptions = { expiresIn };
     return jwt.sign(payload, JWT_SECRET, options);
   }
 

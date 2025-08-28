@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { setGlobalOptions, https } from "firebase-functions";
 import * as logger from "firebase-functions/logger";
 import app from "./interfaces/app";
+import { runServer } from "./interfaces/server";
 
 setGlobalOptions({ maxInstances: 10 });
 
@@ -17,3 +18,5 @@ export const helloWorld = https.onRequest((request, response) => {
         timestamp: new Date().toISOString()
     });
 });
+
+runServer()

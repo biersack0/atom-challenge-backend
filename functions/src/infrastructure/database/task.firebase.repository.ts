@@ -1,8 +1,9 @@
-import {injectable} from "tsyringe";
+import { injectable } from "tsyringe";
 import admin from "@/config/firebase";
-import {ITask} from "@/domain/task/task.entity";
-import {ITaskRepository} from "@/domain/task/task.repository";
-import {AppError} from "@/shared/app-error";
+import { ITask } from "@/domain/task/task.entity";
+import { ITaskRepository } from "@/domain/task/task.repository";
+import { AppError } from "@/shared/app-error";
+import { Timestamp } from "firebase-admin/firestore";
 
 const COLLECTION = "tasks";
 
@@ -16,11 +17,21 @@ export class TaskFirebaseRepository implements ITaskRepository {
 
   async getTasksByUser(userId: string): Promise<ITask[]> {
     const tasks = await this.db.collection(COLLECTION).where("userId", "==", userId).get();
-    return tasks.docs.map((doc) => doc.data() as ITask);
+    const taskList = tasks.docs.map((doc) => doc.data() as ITask);
+
+    return taskList.sort((a, b) => {
+      if (a.isCompleted !== b.isCompleted) {
+        return a.isCompleted ? 1 : -1;
+      }
+
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
   }
 
   async create(task: ITask): Promise<ITask> {
-    const now = new Date();
+    const now = Timestamp.fromDate(new Date());
     const taskId = this.db.collection(COLLECTION).doc().id;
 
     const taskData: ITask = {
@@ -29,8 +40,8 @@ export class TaskFirebaseRepository implements ITaskRepository {
       title: task.title,
       description: task.description || "",
       isCompleted: task.isCompleted ?? false,
-      createdAt: now,
-      updatedAt: now,
+      createdAt: now.toDate(),
+      updatedAt: now.toDate(),
     };
 
     await this.db.collection(COLLECTION).doc(taskId).set(taskData);
