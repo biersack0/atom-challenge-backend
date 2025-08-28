@@ -24,10 +24,10 @@
   },
   "compileOnSave": true,
   "include": [
-    "src"
+    "src",
+    "tests"
   ],
   "exclude": [
-    "tests",
     "node_modules",
     "lib"
   ]
