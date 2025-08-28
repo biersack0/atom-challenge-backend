@@ -4,7 +4,14 @@ import { IUserRepository } from "@/domain/user/user.repository";
 
 @injectable()
 export class UserMockRepository implements IUserRepository {
-    private users: IUser[] = [];
+    private users: IUser[] = [
+        {
+            id: "100",
+            email: "test100@example.com",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+    ];
 
     async findById(id: string): Promise<IUser | null> {
         return this.users.find(user => user.id === id) || null;
